@@ -393,7 +393,7 @@ scl_rc list_packages_in_collection(const char *colname, char ***_pkgnames)
     xasprintf(&provide, "scl-package(%s)", colname);
 
     ts = rpmtsCreate();
-    mi = rpmtsInitIterator(ts, RPMDBI_PROVIDENAME, provide, 0);
+    mi = rpmtsInitIterator(ts, RPMTAG_PROVIDENAME, provide, 0);
     while ((h = rpmdbNextIterator(mi)) != NULL) {
 
         srpms[srpms_count++] = headerGetAsString(h, RPMTAG_SOURCERPM);
@@ -575,7 +575,7 @@ static scl_rc owned_by_package(const char *file_path, bool *_owned)
     }
 
     ts = rpmtsCreate();
-    mi = rpmtsInitIterator(ts, RPMDBI_INSTFILENAMES, file_path, 0);
+    mi = rpmtsInitIterator(ts, RPMTAG_FILENAMES, file_path, 0);
 
     *_owned = rpmdbGetIteratorCount(mi) > 0;
 
